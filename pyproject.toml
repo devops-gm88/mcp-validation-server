@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-validation-server"
+version = "0.1.0"
+description = "Model Context Protocol server exposing deterministic data-validation tools: contract validation with quarantine, reconciliation, distinct entity counts, and duplicate review"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "devops-gm88" }]
+keywords = ["mcp", "model-context-protocol", "data-validation", "data-quality", "reconciliation", "llm-tools"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Quality Assurance",
+    "Typing :: Typed",
+]
+dependencies = ["mcp>=2.0,<3"]
+
+[project.optional-dependencies]
+dev = ["build>=1.2", "ruff>=0.6", "twine>=5.0"]
+
+[project.scripts]
+mcp-validation-server = "mcp_validation_server.server:main"
+
+[project.urls]
+Homepage = "https://github.com/devops-gm88/mcp-validation-server"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mcp_validation_server = ["py.typed"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]

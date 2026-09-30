@@ -1,0 +1,272 @@
+{
+  "arguments": {
+    "rows": [
+      {
+        "invoice": "INV-1001",
+        "amount": "100.50",
+        "date": "2026-04-01"
+      },
+      {
+        "invoice": "",
+        "amount": "20",
+        "date": "2026-04-02"
+      },
+      {
+        "invoice": "INV-1003",
+        "amount": "-5",
+        "date": "2026-04-03"
+      },
+      {
+        "invoice": "INV-1004",
+        "amount": "abc",
+        "date": "04/05/2026"
+      }
+    ],
+    "columns": [
+      {
+        "name": "invoice",
+        "type": "string",
+        "required": true,
+        "pattern": "INV-\\d+"
+      },
+      {
+        "name": "amount",
+        "type": "number",
+        "min": 0
+      },
+      {
+        "name": "date",
+        "type": "date",
+        "required": true
+      }
+    ],
+    "row_key": "invoice"
+  },
+  "is_error": false,
+  "result": {
+    "tool": "validate_rows",
+    "ok": false,
+    "verdict": "quarantined",
+    "finding_count": 4,
+    "findings": [
+      {
+        "code": "required_blank",
+        "severity": "error",
+        "message": "is required but blank",
+        "locator": {
+          "row_index": 1,
+          "row_number": 2,
+          "column": "invoice"
+        },
+        "expected": "a non-blank value"
+      },
+      {
+        "code": "below_minimum",
+        "severity": "error",
+        "message": "-5 is below the minimum of 0",
+        "locator": {
+          "row_index": 2,
+          "row_number": 3,
+          "row_key": "INV-1003",
+          "column": "amount"
+        },
+        "value": -5.0
+      },
+      {
+        "code": "not_a_number",
+        "severity": "error",
+        "message": "'abc' is not a number",
+        "locator": {
+          "row_index": 3,
+          "row_number": 4,
+          "row_key": "INV-1004",
+          "column": "amount"
+        },
+        "value": "abc",
+        "expected": "a value of type number"
+      },
+      {
+        "code": "not_a_date",
+        "severity": "error",
+        "message": "'04/05/2026' is not an ISO-8601 date (expected YYYY-MM-DD)",
+        "locator": {
+          "row_index": 3,
+          "row_number": 4,
+          "row_key": "INV-1004",
+          "column": "date"
+        },
+        "value": "04/05/2026",
+        "expected": "a value of type date"
+      }
+    ],
+    "guidance": "3 of 4 rows were quarantined and are listed in `quarantine` with a locator and reasons. Failure codes: below_minimum (1), not_a_date (1), not_a_number (1), required_blank (1). Do not use the accepted rows as if they were the whole dataset: report both counts, and resolve or explicitly exclude the quarantined rows before aggregating.",
+    "contract": {
+      "row_key": "invoice",
+      "columns": [
+        {
+          "name": "invoice",
+          "required": true,
+          "type": "string",
+          "on_fail": "quarantine",
+          "checks": [
+            {
+              "rule": "pattern",
+              "regex": "INV-\\d+",
+              "matching": "fullmatch"
+            }
+          ]
+        },
+        {
+          "name": "amount",
+          "required": false,
+          "type": "number",
+          "on_fail": "quarantine",
+          "checks": [
+            {
+              "rule": "min",
+              "bound": 0.0
+            }
+          ]
+        },
+        {
+          "name": "date",
+          "required": true,
+          "type": "date",
+          "on_fail": "quarantine",
+          "checks": []
+        }
+      ]
+    },
+    "summary": {
+      "rows_in": 4,
+      "accepted": 1,
+      "quarantined": 3,
+      "flagged": 0,
+      "pass_rate": 0.25,
+      "accounted_for": 4
+    },
+    "accepted": [
+      {
+        "invoice": "INV-1001",
+        "amount": 100.5,
+        "date": "2026-04-01"
+      }
+    ],
+    "quarantine": [
+      {
+        "locator": {
+          "row_index": 1,
+          "row_number": 2
+        },
+        "row": {
+          "invoice": "",
+          "amount": 20.0,
+          "date": "2026-04-02"
+        },
+        "reasons": [
+          "invoice: is required but blank"
+        ],
+        "findings": [
+          {
+            "code": "required_blank",
+            "severity": "error",
+            "message": "is required but blank",
+            "locator": {
+              "row_index": 1,
+              "row_number": 2,
+              "column": "invoice"
+            },
+            "expected": "a non-blank value"
+          }
+        ]
+      },
+      {
+        "locator": {
+          "row_index": 2,
+          "row_number": 3,
+          "row_key": "INV-1003"
+        },
+        "row": {
+          "invoice": "INV-1003",
+          "amount": -5.0,
+          "date": "2026-04-03"
+        },
+        "reasons": [
+          "amount: -5 is below the minimum of 0"
+        ],
+        "findings": [
+          {
+            "code": "below_minimum",
+            "severity": "error",
+            "message": "-5 is below the minimum of 0",
+            "locator": {
+              "row_index": 2,
+              "row_number": 3,
+              "row_key": "INV-1003",
+              "column": "amount"
+            },
+            "value": -5.0
+          }
+        ]
+      },
+      {
+        "locator": {
+          "row_index": 3,
+          "row_number": 4,
+          "row_key": "INV-1004"
+        },
+        "row": {
+          "invoice": "INV-1004",
+          "amount": "abc",
+          "date": "04/05/2026"
+        },
+        "reasons": [
+          "amount: 'abc' is not a number",
+          "date: '04/05/2026' is not an ISO-8601 date (expected YYYY-MM-DD)"
+        ],
+        "findings": [
+          {
+            "code": "not_a_number",
+            "severity": "error",
+            "message": "'abc' is not a number",
+            "locator": {
+              "row_index": 3,
+              "row_number": 4,
+              "row_key": "INV-1004",
+              "column": "amount"
+            },
+            "value": "abc",
+            "expected": "a value of type number"
+          },
+          {
+            "code": "not_a_date",
+            "severity": "error",
+            "message": "'04/05/2026' is not an ISO-8601 date (expected YYYY-MM-DD)",
+            "locator": {
+              "row_index": 3,
+              "row_number": 4,
+              "row_key": "INV-1004",
+              "column": "date"
+            },
+            "value": "04/05/2026",
+            "expected": "a value of type date"
+          }
+        ]
+      }
+    ],
+    "flagged": [],
+    "errors_by_column": {
+      "amount": 2,
+      "date": 1,
+      "invoice": 1
+    },
+    "findings_by_code": {
+      "below_minimum": 1,
+      "not_a_date": 1,
+      "not_a_number": 1,
+      "required_blank": 1
+    },
+    "columns_seen": [],
+    "columns_required_but_absent": []
+  }
+}
