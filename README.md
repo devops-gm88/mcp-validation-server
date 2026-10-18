@@ -1,7 +1,16 @@
 # mcp-validation-server
 
+[![CI](https://github.com/devops-gm88/mcp-validation-server/actions/workflows/ci.yml/badge.svg)](https://github.com/devops-gm88/mcp-validation-server/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/mcp-validation-server.svg)](https://pypi.org/project/mcp-validation-server/)
+[![Python versions](https://img.shields.io/pypi/pyversions/mcp-validation-server.svg)](https://pypi.org/project/mcp-validation-server/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
+
 A [Model Context Protocol](https://modelcontextprotocol.io) server that gives a language model a set of
 data-validation tools it cannot argue with.
+
+```bash
+uvx mcp-validation-server      # or: pip install mcp-validation-server
+```
 
 **MCP in one sentence:** the Model Context Protocol is an open standard that lets an AI application
 call tools running in a separate process, so the tool does the work and returns a result the model has
@@ -95,11 +104,25 @@ Three kinds of suspicion, each labelled:
 
 ## Install
 
+Fastest, with nothing to clone:
+
+```bash
+uvx mcp-validation-server
+```
+
+Or install it into an environment:
+
+```bash
+pip install mcp-validation-server
+```
+
+Or from source, for development:
+
 ```bash
 git clone https://github.com/devops-gm88/mcp-validation-server.git
 cd mcp-validation-server
 python3 -m venv .venv
-.venv/bin/pip install -e .
+.venv/bin/pip install -e ".[dev]"
 ```
 
 Python 3.10 or newer. `mcp` is the only runtime dependency; everything else is the standard library.
