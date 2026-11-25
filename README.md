@@ -1,5 +1,14 @@
 # mcp-validation-server
 
+
+A Model Context Protocol server that gives a language model data-validation tools it cannot argue with.
+
+[![CI](https://github.com/devops-gm88/mcp-validation-server/actions/workflows/ci.yml/badge.svg)](https://github.com/devops-gm88/mcp-validation-server/actions/workflows/ci.yml) **139 tests** in CI run [39094415766](https://github.com/devops-gm88/mcp-validation-server/actions/runs/39094415766) - measured: 139 tests passing, published on PyPI, every tool returns structured reasons rather than raising
+
+```bash
+uvx mcp-validation-server
+```
+
 [![CI](https://github.com/devops-gm88/mcp-validation-server/actions/workflows/ci.yml/badge.svg)](https://github.com/devops-gm88/mcp-validation-server/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/mcp-validation-server.svg)](https://pypi.org/project/mcp-validation-server/)
 [![Python versions](https://img.shields.io/pypi/pyversions/mcp-validation-server.svg)](https://pypi.org/project/mcp-validation-server/)
